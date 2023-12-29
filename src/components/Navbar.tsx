@@ -3,36 +3,42 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Box, Button, Flex, Image } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "@/redux/store";
+import { AppDispatch, RootState } from "@/redux/store";
 import Axios from "../../axios";
 import { logout } from "@/redux/authSlice/authSlice";
 import { baseUrl } from "../../configs";
 import { IoMdChatbubbles } from "react-icons/io";
 import { Icon } from "@chakra-ui/react";
 import { useAppSelector } from "@/redux/providers";
-import Cookies from "js-cookie";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
-  MenuItemOption,
   MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
 } from "@chakra-ui/react";
+import { BiAlignLeft, BiChevronLeft } from "react-icons/bi";
+import { ChatState, setShowLeftTab } from "@/redux/chatSlice/chatSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [loginComponent, setLoginComponent] = useState<any>();
   const isAuth = useAppSelector((store) => store.auth.isAuth);
+  const _id = useAppSelector((store) => store.auth._id);
   const avatar = useAppSelector((store) => store.auth.avatar);
   const name = useAppSelector((store) => store.auth.name);
   // console.log(isAuth);
-  const logoutRequest = async (url: string) => {
+
+  // const dispatch = useDispatch();
+  const { showLeftTab } = useSelector<RootState, ChatState>(
+    (store) => store.chat
+  );
+
+  const logoutRequest = async (url: string, obj: object) => {
+    console.log(url, obj);
     try {
-      let res = await Axios.get(url);
+      let res = await Axios.post(url, obj);
       console.log(res);
       dispatch(logout());
     } catch (error) {
@@ -62,7 +68,10 @@ const Navbar = () => {
                 <MenuItem>Settings</MenuItem>
                 <MenuItem
                   onClick={() => {
-                    logoutRequest(baseUrl + "/user/logout");
+                    logoutRequest(baseUrl + "/user/logout", {
+                      _id: _id,
+                      newMessages: {},
+                    });
                   }}
                 >
                   Logout
@@ -90,7 +99,33 @@ const Navbar = () => {
         m={"auto"}
       >
         <Link href={"/"}>
-          <Icon as={IoMdChatbubbles} w={10} h={10} color="blue.500" />
+          {showLeftTab ? (
+            <Icon
+              as={BiAlignLeft}
+              w={10}
+              h={10}
+              color="blue.500"
+              display={["block", "block", "none"]}
+              onClick={() => dispatch(setShowLeftTab(true))}
+            />
+          ) : (
+            <Icon
+              as={BiChevronLeft}
+              w={10}
+              h={10}
+              color="blue.500"
+              display={["block", "block", "none"]}
+              onClick={() => dispatch(setShowLeftTab(true))}
+            />
+          )}
+
+          <Icon
+            as={IoMdChatbubbles}
+            w={10}
+            h={10}
+            color="blue.500"
+            display={["none", "none", "block"]}
+          />
         </Link>
         <Box>{loginComponent}</Box>
       </Flex>
