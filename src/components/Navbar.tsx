@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { JSXElementConstructor, useEffect, useState } from "react";
 import Link from "next/link";
 import { Box, Button, Flex, Image } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,7 +21,11 @@ import {
 import { BiAlignLeft, BiChevronLeft } from "react-icons/bi";
 import { ChatState, setShowLeftTab } from "@/redux/chatSlice/chatSlice";
 
-const Navbar = () => {
+type NavbarInterface = {
+  height: string;
+};
+
+const Navbar: JSXElementConstructor<NavbarInterface> = ({ height }) => {
   const dispatch = useDispatch<AppDispatch>();
   const [loginComponent, setLoginComponent] = useState<any>();
   const isAuth = useAppSelector((store) => store.auth.isAuth);
@@ -89,7 +93,7 @@ const Navbar = () => {
   }, [isAuth]);
 
   return (
-    <Box>
+    <Box h={height}>
       <Flex
         justifyContent={"space-between"}
         alignItems={"center"}

@@ -5,6 +5,7 @@ import {
   Flex,
   Grid,
   Heading,
+  Image,
   Input,
   Tab,
   TabList,
@@ -16,7 +17,6 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { baseUrl } from "../../configs";
 import { io } from "socket.io-client";
-import { useAppSelector } from "@/redux/providers";
 import { RootState } from "@/redux/store";
 import { AuthState } from "@/redux/authSlice/authSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -153,7 +153,7 @@ const Homepage = () => {
   };
 
   return (
-    <Box>
+    <Box h={"calc(100vh - 72px)"}>
       <Grid
         maxW={"1370px"}
         m={"auto"}
@@ -167,12 +167,10 @@ const Homepage = () => {
           base: 0,
           md: 5,
         }}
-        h={"85vh"}
       >
         <LeftTab />
 
         <Flex
-          // border={"1px solid red"}
           display={{
             base: showLeftTab ? "none" : "flex",
             sm: showLeftTab ? "none" : "flex",
@@ -180,9 +178,35 @@ const Homepage = () => {
           }}
           flexDir={"column"}
           justifyContent={"space-between"}
-          // p={"10px"}
           bg={"gray.100"}
+          border={"1px solid red"}
+          h={"calc(100vh - 120px)"}
         >
+          <Flex
+            gap={"20px"}
+            p={"15px"}
+            bg={"white"}
+            alignItems={"center"}
+            borderTopRadius={"10px"}
+            borderBottom={"1px solid grey"}
+            h={"70px"}
+          >
+            <Image
+              alt=""
+              w="50px"
+              h="50px"
+              borderRadius="50%"
+              src={
+                privateId === ""
+                  ? "https://via.placeholder.com/200x200.png"
+                  : privateId.avatar
+              }
+            />
+            <Text fontWeight={"500"} fontSize={["1rem", "1.1rem", "1.3rem"]}>
+              {privateId === "" ? newRoom : privateId.name}
+            </Text>
+          </Flex>
+
           {messages.map((e) => {
             return (
               <Flex
@@ -190,17 +214,17 @@ const Homepage = () => {
                 key={e._id}
                 overflow={"auto"}
                 padding={"10Px"}
-                maxH={"78vh"}
+                h={"calc(100% - 145px)"}
                 ref={chatContainerRef}
+                borderRadius={"10px"}
+                border={"1px solid red"}
               >
                 <Box
                   bg={"gray.300"}
-                  // w={"100%"}
                   w={"fit-content"}
                   margin={"auto"}
                   padding={"2px 10px"}
                   borderRadius={"5px"}
-                  // border={"1px solid red"}
                   textAlign={"center"}
                 >
                   {e._id}
@@ -210,7 +234,6 @@ const Homepage = () => {
                     <Box
                       w={"fit-content"}
                       padding={"10px"}
-                      // border={"1px solid green"}
                       margin={"5px 2px"}
                       key={ind}
                       borderRadius={"10px"}
@@ -225,7 +248,6 @@ const Homepage = () => {
                       >
                         {ele.from.name}
                       </Text>
-                      {/* <Box border={"1px solid red"} pr={"50px"}> */}
                       <Text pr={"40px"}>{ele.content}</Text>
                       <Text
                         fontSize={"0.7rem"}
@@ -236,14 +258,19 @@ const Homepage = () => {
                         {ele.time.substring(0, 5)}
                       </Text>
                     </Box>
-                    // </Box>
                   );
                 })}
               </Flex>
             );
           })}
 
-          <Box bg={"white"} padding={"6px"} borderRadius={"10px"} m={"5px"}>
+          <Box
+            bg={"white"}
+            padding={"6px"}
+            borderRadius={"10px"}
+            m={"5px"}
+            // h={"75px"}
+          >
             <form
               onSubmit={(e) => {
                 handleClick();

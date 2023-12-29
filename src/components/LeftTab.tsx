@@ -2,6 +2,7 @@ import React from "react";
 import {
   Box,
   Flex,
+  Image,
   Tab,
   TabList,
   TabPanel,
@@ -49,18 +50,18 @@ const LeftTab = () => {
     dispatch(setShowLeftTab(false));
   };
 
-  const joinPrivateChat = (room: string) => {
-    if (_id == room) {
+  const joinPrivateChat = (e: any) => {
+    if (_id == e._id) {
       return;
     }
     const pRoom = newRoom;
     dispatch(setPreviousRoom(pRoom));
-    dispatch(setPrivateId(room));
+    dispatch(setPrivateId(e));
 
-    if (_id > room) {
-      dispatch(setNewRoom(_id + "-" + room));
+    if (_id > e._id) {
+      dispatch(setNewRoom(_id + "-" + e._id));
     } else {
-      dispatch(setNewRoom(room + "-" + _id));
+      dispatch(setNewRoom(e._id + "-" + _id));
     }
     dispatch(setTypeRoom("private"));
     dispatch(setShowLeftTab(false));
@@ -122,16 +123,28 @@ const LeftTab = () => {
             return (
               <Flex
                 key={e._id}
-                onClick={() => joinPrivateChat(e._id)}
-                bg={e._id == privateId ? "gray.400" : ""}
+                onClick={() => joinPrivateChat(e)}
+                bg={e._id == privateId._id ? "gray.400" : ""}
                 _hover={{
                   cursor: "pointer",
-                  bg: e._id == privateId ? "gray.400" : "gray.200",
+                  bg: e._id == privateId._id ? "gray.400" : "gray.200",
                 }}
                 p={"10px"}
-                justifyContent={"space-between"}
+                // justifyContent={"space-between"}
+                gap={"10px"}
+                alignItems={"center"}
+                alignSelf={e._id === _id ? "flex-start" : ""}
               >
-                {e.name} {e._id == _id ? "(You)" : `(${e.status})`}
+                <Image
+                  alt=""
+                  w="50px"
+                  h="50px"
+                  borderRadius="50%"
+                  src={e.avatar}
+                />
+                <Box>
+                  {e.name} {e._id == _id ? "(You)" : `(${e.status})`}
+                </Box>
               </Flex>
             );
           })}

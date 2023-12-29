@@ -10,7 +10,7 @@ export interface ChatState {
     typeRoom:string,
     previousRoom:string,
     notifications:any,
-    privateId:string,
+    privateId:any,
     showLeftTab:boolean
 }
 
@@ -51,7 +51,7 @@ const chatSlice = createSlice({
       setNotifications:(state,action: PayloadAction<any>)=>{
         state.notifications=action.payload
       },
-      setPrivateId:(state,action: PayloadAction<string>)=>{
+      setPrivateId:(state,action: PayloadAction<any>)=>{
         state.privateId=action.payload
       },
       setShowLeftTab:(state,action: PayloadAction<boolean>)=>{
