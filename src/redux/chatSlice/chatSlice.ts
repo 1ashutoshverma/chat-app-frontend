@@ -21,7 +21,7 @@ const initialState: ChatState = {
     newRoom:"Public Discussion",
     typeRoom:"chatroom",
     previousRoom:"",
-    notifications:"",
+    notifications:{private:{}, chatroom:{}},
     privateId:"",
     showLeftTab:true
 }
@@ -49,7 +49,36 @@ const chatSlice = createSlice({
         state.previousRoom=action.payload
       },
       setNotifications:(state,action: PayloadAction<any>)=>{
-        state.notifications=action.payload
+
+        const { type, room, sender } = action.payload;
+
+        const updateNotifications = (notificationType: string, key: string) => {
+          if (!state.notifications[notificationType]) {
+            state.notifications[notificationType] = {};
+          }
+        
+          state.notifications[notificationType] = {
+            ...state.notifications[notificationType],
+            [key]: state.notifications[notificationType][key] ? state.notifications[notificationType][key] + 1 : 1,
+          };
+        };
+
+        const deleteNotifications = (notificationType:string, key:string) => {
+
+          if(state.notifications[notificationType] ){
+            const {[key] : abc, ...rest} =   state.notifications[notificationType]
+            state.notifications[notificationType] = rest;
+          }
+        };
+      
+        if (type === "chatroom") {
+          updateNotifications("chatroom", room);
+        } else if (type === "private") {
+          updateNotifications("private", sender._id);
+        } else if(type === "remove"){
+          deleteNotifications(sender,room)
+        }
+        // state.notifications=action.payload
       },
       setPrivateId:(state,action: PayloadAction<any>)=>{
         state.privateId=action.payload

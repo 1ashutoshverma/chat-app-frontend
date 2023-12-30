@@ -1,19 +1,5 @@
 "use client";
-import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  Heading,
-  Image,
-  Input,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, Grid, Image, Input, Text } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { baseUrl } from "../../configs";
 import { io } from "socket.io-client";
@@ -65,6 +51,7 @@ const Homepage = () => {
       dispatch(setMembers(members));
     });
   }, []);
+  // console.log(notifications);
 
   const handleClick = () => {
     let time = new Date();
@@ -101,43 +88,17 @@ const Homepage = () => {
     });
   }, [newRoom, typeRoom, previousRoom]);
 
-  const joinPublicChat = (room: string) => {
-    const pRoom = newRoom;
-    dispatch(setPreviousRoom(pRoom));
-    dispatch(setPrivateId(""));
-    dispatch(setNewRoom(room));
-    dispatch(setTypeRoom("chatroom"));
-
-    const { [room]: del, ...left } = notifications;
-    dispatch(setNotifications({ ...left }));
-  };
-
-  socket.off("notification").on("notification", (room) => {
+  socket.off("notification").on("notification", (room, type, sender) => {
     if (newRoom != room) {
       dispatch(
         setNotifications({
-          ...notifications,
-          [room]: notifications[room] ? notifications[room] + 1 : 1,
+          room,
+          type,
+          sender,
         })
       );
     }
   });
-
-  const joinPrivateChat = (room: string) => {
-    if (_id == room) {
-      return;
-    }
-    const pRoom = newRoom;
-    dispatch(setPreviousRoom(pRoom));
-    dispatch(setPrivateId(room));
-
-    if (_id > room) {
-      dispatch(setNewRoom(_id + "-" + room));
-    } else {
-      dispatch(setNewRoom(room + "-" + _id));
-    }
-    dispatch(setTypeRoom("private"));
-  };
 
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
@@ -179,8 +140,9 @@ const Homepage = () => {
           flexDir={"column"}
           justifyContent={"space-between"}
           bg={"gray.100"}
-          border={"1px solid red"}
-          h={"calc(100vh - 120px)"}
+          // border={"1px solid red"}
+          borderRadius={"10px"}
+          h={"calc(100vh - 115px)"}
         >
           <Flex
             gap={"20px"}
@@ -188,7 +150,7 @@ const Homepage = () => {
             bg={"white"}
             alignItems={"center"}
             borderTopRadius={"10px"}
-            borderBottom={"1px solid grey"}
+            border={"1px solid rgba(105, 105, 105, 0.2)"}
             h={"70px"}
           >
             <Image
@@ -207,62 +169,65 @@ const Homepage = () => {
             </Text>
           </Flex>
 
-          {messages.map((e) => {
-            return (
-              <Flex
-                flexDir={"column"}
-                key={e._id}
-                overflow={"auto"}
-                padding={"10Px"}
-                h={"calc(100% - 145px)"}
-                ref={chatContainerRef}
-                borderRadius={"10px"}
-                border={"1px solid red"}
-              >
-                <Box
-                  bg={"gray.300"}
-                  w={"fit-content"}
-                  margin={"auto"}
-                  padding={"2px 10px"}
-                  borderRadius={"5px"}
-                  textAlign={"center"}
+          <Box
+            overflow={"auto"}
+            h={"calc(100% - 140px)"}
+            ref={chatContainerRef}
+          >
+            {messages.map((e) => {
+              return (
+                <Flex
+                  flexDir={"column"}
+                  key={e._id}
+                  padding={"10Px"}
+                  // borderRadius={"10px"}
+                  // border={"1px solid red"}
                 >
-                  {e._id}
-                </Box>
-                {e.messageByDate?.map((ele: any, ind: number) => {
-                  return (
-                    <Box
-                      w={"fit-content"}
-                      padding={"10px"}
-                      margin={"5px 2px"}
-                      key={ind}
-                      borderRadius={"10px"}
-                      backgroundColor={"white"}
-                      alignSelf={ele.from._id == _id ? "end" : ""}
-                      maxWidth={"60%"}
-                    >
-                      <Text
-                        fontWeight={"600"}
-                        color={"blue"}
-                        display={ele.from._id == _id ? "none" : ""}
+                  <Box
+                    bg={"gray.300"}
+                    w={"fit-content"}
+                    margin={"auto"}
+                    padding={"2px 10px"}
+                    borderRadius={"5px"}
+                    textAlign={"center"}
+                  >
+                    {e._id}
+                  </Box>
+                  {e.messageByDate?.map((ele: any, ind: number) => {
+                    return (
+                      <Box
+                        w={"fit-content"}
+                        padding={"10px"}
+                        margin={"5px 2px"}
+                        key={ind}
+                        borderRadius={"10px"}
+                        backgroundColor={"white"}
+                        alignSelf={ele.from._id == _id ? "end" : ""}
+                        maxWidth={"60%"}
                       >
-                        {ele.from.name}
-                      </Text>
-                      <Text pr={"40px"}>{ele.content}</Text>
-                      <Text
-                        fontSize={"0.7rem"}
-                        color={"gray.500"}
-                        textAlign={"end"}
-                        mt={"-12px"}
-                      >
-                        {ele.time.substring(0, 5)}
-                      </Text>
-                    </Box>
-                  );
-                })}
-              </Flex>
-            );
-          })}
+                        <Text
+                          fontWeight={"600"}
+                          color={"blue"}
+                          display={ele.from._id == _id ? "none" : ""}
+                        >
+                          {ele.from.name}
+                        </Text>
+                        <Text pr={"40px"}>{ele.content}</Text>
+                        <Text
+                          fontSize={"0.7rem"}
+                          color={"gray.500"}
+                          textAlign={"end"}
+                          mt={"-12px"}
+                        >
+                          {ele.time.substring(0, 5)}
+                        </Text>
+                      </Box>
+                    );
+                  })}
+                </Flex>
+              );
+            })}
+          </Box>
 
           <Box
             bg={"white"}

@@ -93,11 +93,12 @@ const Navbar: JSXElementConstructor<NavbarInterface> = ({ height }) => {
   }, [isAuth]);
 
   return (
-    <Box h={height}>
+    <Box h={height} boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}>
       <Flex
         justifyContent={"space-between"}
         alignItems={"center"}
-        borderBottom={"1px solid red"}
+        // borderBottom={"1px solid rgba(105,105,105,0.5)"}
+
         padding={"10px 15px"}
         maxW={"1200px"}
         m={"auto"}
