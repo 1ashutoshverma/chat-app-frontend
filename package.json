@@ -17,6 +17,7 @@
     "@reduxjs/toolkit": "^2.0.1",
     "axios": "^1.6.2",
     "bufferutil": "^4.0.8",
+    "firebase": "^10.7.1",
     "framer-motion": "^10.16.16",
     "js-cookie": "^3.0.5",
     "next": "14.0.4",

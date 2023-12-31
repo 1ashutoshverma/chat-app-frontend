@@ -1,7 +1,12 @@
 "use client";
-import React, { JSXElementConstructor, useEffect, useState } from "react";
+import React, {
+  JSXElementConstructor,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import Link from "next/link";
-import { Box, Button, Flex, Image } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Image } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import Axios from "../../axios";
@@ -32,23 +37,23 @@ const Navbar: JSXElementConstructor<NavbarInterface> = ({ height }) => {
   const _id = useAppSelector((store) => store.auth._id);
   const avatar = useAppSelector((store) => store.auth.avatar);
   const name = useAppSelector((store) => store.auth.name);
-  // console.log(isAuth);
 
-  // const dispatch = useDispatch();
   const { showLeftTab } = useSelector<RootState, ChatState>(
     (store) => store.chat
   );
 
-  const logoutRequest = async (url: string, obj: object) => {
-    console.log(url, obj);
+  const logoutRequest = useCallback(async () => {
     try {
-      let res = await Axios.post(url, obj);
+      let res = await Axios.post(baseUrl + "/user/logout", {
+        _id: _id,
+        newMessages: {},
+      });
       console.log(res);
       dispatch(logout());
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [dispatch, _id]);
 
   //login and logout component update
   useEffect(() => {
@@ -99,38 +104,47 @@ const Navbar: JSXElementConstructor<NavbarInterface> = ({ height }) => {
         alignItems={"center"}
         // borderBottom={"1px solid rgba(105,105,105,0.5)"}
 
-        padding={"10px 15px"}
-        maxW={"1200px"}
+        padding={"10px 30px"}
+        // maxW={"1370px"}
         m={"auto"}
       >
         <Link href={"/"}>
-          {showLeftTab ? (
-            <Icon
-              as={BiAlignLeft}
-              w={10}
-              h={10}
-              color="blue.500"
-              display={["block", "block", "none"]}
-              onClick={() => dispatch(setShowLeftTab(true))}
-            />
-          ) : (
-            <Icon
-              as={BiChevronLeft}
-              w={10}
-              h={10}
-              color="blue.500"
-              display={["block", "block", "none"]}
-              onClick={() => dispatch(setShowLeftTab(true))}
-            />
-          )}
+          <Flex alignItems={"center"} justifyContent={"center"} gap={"2px"}>
+            {showLeftTab ? (
+              <Icon
+                as={BiAlignLeft}
+                w={10}
+                h={10}
+                color="blue.500"
+                display={["block", "block", "none"]}
+                onClick={() => dispatch(setShowLeftTab(true))}
+              />
+            ) : (
+              <Icon
+                as={BiChevronLeft}
+                w={10}
+                h={10}
+                color="blue.500"
+                display={["block", "block", "none"]}
+                onClick={() => dispatch(setShowLeftTab(true))}
+              />
+            )}
 
-          <Icon
-            as={IoMdChatbubbles}
-            w={10}
-            h={10}
-            color="blue.500"
-            display={["none", "none", "block"]}
-          />
+            <Icon
+              as={IoMdChatbubbles}
+              w={10}
+              h={10}
+              color="blue.500"
+              display={["none", "none", "block"]}
+            />
+            <Heading
+              fontSize={"1.4rem"}
+              color={"blue.500"}
+              display={["none", "none", "block"]}
+            >
+              Chat App
+            </Heading>
+          </Flex>
         </Link>
         <Box>{loginComponent}</Box>
       </Flex>

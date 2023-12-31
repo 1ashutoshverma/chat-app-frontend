@@ -1,5 +1,5 @@
 "use client";
-import Navbar from "@/components/Navbar";
+
 import {
   Box,
   Button,
@@ -12,8 +12,8 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { FormControl, FormLabel } from "@chakra-ui/react";
+import React, { useCallback, useEffect, useState } from "react";
+import { FormControl } from "@chakra-ui/react";
 import { baseUrl } from "../../../configs";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
@@ -46,28 +46,31 @@ const page = () => {
   const router = useRouter();
   const toast = useToast();
 
-  const loginRequest = async (url: string, obj: object) => {
-    try {
-      let res = await Axios.post(url, obj);
-      toast({
-        description: res.data.message,
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-        position: "top",
-      });
-      dispatch(login());
-    } catch (error: any) {
-      // console.log(error);
-      toast({
-        description: error.response.data.message,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "top",
-      });
-    }
-  };
+  const loginRequest = useCallback(
+    async (url: string, obj: object) => {
+      try {
+        let res = await Axios.post(url, obj);
+        toast({
+          description: res.data.message,
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "top",
+        });
+        dispatch(login());
+      } catch (error: any) {
+        // console.log(error);
+        toast({
+          description: error.response.data.message,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "top",
+        });
+      }
+    },
+    [dispatch, toast, login]
+  );
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -86,23 +89,29 @@ const page = () => {
 
   return (
     <Box>
-      <Navbar />
       <Flex
         width={"100vw"}
-        height={"90vh"}
+        height={"100vh"}
         justifyContent={"center"}
+        // border={"1px solid red"}
         alignItems={"center"}
+        maxW={"1280px"}
+        m={"auto"}
       >
         <Grid
-          gridTemplateColumns={"0.75fr 1fr"}
-          boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
+          gridTemplateColumns={["1fr", "1fr", "0.8fr 1fr"]}
+          boxShadow={"rgba(99, 99, 99, 0.4) 0px 2px 8px 0px"}
           borderRadius={"10px"}
-          h={"450px"}
+          // h={"450px"}
+          // width={"70%"}
+          width={["90%", "80%", "80%"]}
+          // h={"80%"}
         >
           <Box
             bgGradient="linear(to-t, purple.400, blue.300 ,green.300)"
             color={"white"}
             borderLeftRadius={"10px"}
+            display={["none", "none", "block"]}
           >
             <Flex
               flexDir={"column"}
@@ -114,15 +123,23 @@ const page = () => {
               gap={"25px"}
             >
               <Flex flexDir={"column"} alignItems={"center"}>
-                <Icon as={IoMdChatbubbles} w={"50px"} h={"50px"} />
+                <Icon as={IoMdChatbubbles} w={"70px"} h={"70px"} />
                 <Heading>Chat App</Heading>
               </Flex>
-              <Text textAlign={"center"}>
+              <Text
+                textAlign={"center"}
+                fontSize={["1.2rem", "1.3rem", "1.5rem"]}
+              >
                 Share Your Smile With This World and Loved Ones
               </Text>
               <Flex flexDir={"column"} alignItems={"center"}>
-                <Icon as={VscCoffee} w={"50px"} h={"50px"} />
-                <Text textAlign={"center"}>Enjoy..!</Text>
+                <Icon as={VscCoffee} w={"70px"} h={"70px"} />
+                <Text
+                  textAlign={"center"}
+                  fontSize={["1.2rem", "1.3rem", "1.5rem"]}
+                >
+                  Enjoy..!
+                </Text>
               </Flex>
             </Flex>
           </Box>
@@ -130,15 +147,25 @@ const page = () => {
           <form onSubmit={handleSubmit}>
             <Flex
               flexDir={"column"}
-              p={"30px"}
-              gap={"15px"}
+              p={["15px", "30px", "40px"]}
+              gap={"20px"}
               justifyContent={"center"}
               h={"100%"}
+              m={"auto"}
             >
+              <Flex justifyContent={"center"}>
+                <Icon
+                  as={IoMdChatbubbles}
+                  w={["50px", "50px", "70px"]}
+                  h={["50px", "50px", "70px"]}
+                  color={"blue.500"}
+                />
+              </Flex>
               <Heading
                 textAlign={"center"}
                 color={"purple.500"}
-                fontSize={"1.8rem"}
+                p={["8px 0", "10px 0"]}
+                fontSize={["1.7rem", "1.8rem", "2.5rem"]}
               >
                 Login Here
               </Heading>
@@ -150,6 +177,8 @@ const page = () => {
                   name="email"
                   value={user.email}
                   onChange={handleUser}
+                  fontSize={["1.2rem", "1.3rem", "1.5rem"]}
+                  py={["6", "7", "8"]}
                 />
               </FormControl>
               <FormControl isRequired>
@@ -159,31 +188,13 @@ const page = () => {
                   name="password"
                   value={user.password}
                   onChange={handleUser}
+                  fontSize={["1.2rem", "1.3rem", "1.5rem"]}
+                  py={["6", "7", "8"]}
                 />
               </FormControl>
-              <Text>Forget password? </Text>
-              {/* <Flex
-                width={"100%"}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <Button
-                  type="submit"
-                  bgGradient="linear(to-l, purple.400, blue.300 ,green.300)"
-                  _hover={{
-                    bgGradient: "linear(to-l, purple.500, blue.400 ,green.400)",
-                  }}
-                  w={"47%"}
-                  borderRadius={"none"}
-                >
-                  Login
-                </Button>
-                <Image
-                  src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*u0bwdudgoyKjSLntsRcqiw.png"
-                  alt=""
-                  w={"53%"}
-                />
-              </Flex> */}
+              <Text fontSize={["1.1rem", "1.25rem", "1.5rem"]}>
+                Forget password?{" "}
+              </Text>
               <Button
                 type="submit"
                 color={"white"}
@@ -191,6 +202,8 @@ const page = () => {
                 _hover={{
                   bgGradient: "linear(to-l, purple.500, blue.400 ,green.400)",
                 }}
+                fontSize={["1.2rem", "1.3rem", "1.5rem"]}
+                py={["6", "7", "8"]}
               >
                 Login
               </Button>
@@ -201,10 +214,15 @@ const page = () => {
                   bgGradient: "linear(to-l, purple.500, blue.400 ,green.400)",
                 }}
                 onClick={HandleGoogleLogin}
+                fontSize={["1.2rem", "1.3rem", "1.5rem"]}
+                py={["6", "7", "8"]}
               >
                 Login With Google
               </Button>
-              <Text textAlign={"center"}>
+              <Text
+                textAlign={"center"}
+                fontSize={["1.1rem", "1.25rem", "1.5rem"]}
+              >
                 New Here?{" "}
                 <Box
                   as="span"
@@ -214,6 +232,7 @@ const page = () => {
                   onClick={() => {
                     router.push("/signup");
                   }}
+                  fontSize={["1.1rem", "1.25rem", "1.5rem"]}
                 >
                   Sign Up Please!
                 </Box>

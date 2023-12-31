@@ -7,8 +7,11 @@ import {
   Grid,
   Heading,
   Icon,
+  IconButton,
+  Image,
   Input,
   Text,
+  useImage,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { FormControl, FormLabel } from "@chakra-ui/react";
@@ -20,6 +23,10 @@ import Axios from "../../../axios";
 import { IoMdChatbubbles } from "react-icons/io";
 import { VscCoffee } from "react-icons/vsc";
 import { useToast } from "@chakra-ui/react";
+import { FaPlus } from "react-icons/fa";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
+import { storage } from "../../../configs";
 
 const userInitialObject: {
   name: string;
@@ -33,7 +40,7 @@ const userInitialObject: {
   confirmPassword: "",
 };
 
-const page = () => {
+const Page = () => {
   const [user, setUser] = useState(userInitialObject);
   const handleUser = (e: any) => {
     const { name, value } = e.target;
@@ -68,37 +75,89 @@ const page = () => {
     }
   };
 
-  const handleSubmit = (e: any): void => {
-    e.preventDefault();
-    const { confirmPassword, ...rest } = user;
-    signUp(baseUrl + "/user/signup", rest);
-  };
-
   useEffect(() => {
     if (isAuth) {
       router.push("/");
     }
   }, [isAuth]);
 
+  const [profile, setProfile] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      setProfile(files[0]);
+    }
+  };
+
+  const handleUpload = async () => {
+    if (profile) {
+      // Create a reference to the storage bucket
+      const storageRef = ref(storage, `images/${Date.now()}${profile.name}`);
+
+      // Upload the file
+      await uploadBytes(storageRef, profile);
+
+      // Get the download URL
+      const url = await getDownloadURL(storageRef);
+      setImageUrl(url);
+    }
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    if (profile) {
+      // Create a reference to the storage bucket
+      const storageRef = ref(storage, `images/${Date.now()}${profile.name}`);
+
+      // Upload the file
+      await uploadBytes(storageRef, profile);
+
+      // Get the download URL
+      const url = await getDownloadURL(storageRef);
+      if (url) {
+        console.log(url);
+        const { confirmPassword, ...rest } = user;
+        signUp(baseUrl + "/user/signup", { ...rest, avatar: url });
+      } else {
+        console.log("Something went wrong in firebase!");
+      }
+    } else {
+      toast({
+        description: "Select your profile pic",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+    }
+  };
+
   return (
     <Box>
-      <Navbar />
       <Flex
         width={"100vw"}
-        height={"90vh"}
+        height={"100vh"}
         justifyContent={"center"}
         alignItems={"center"}
+        maxW={"1280px"}
+        m={"auto"}
       >
         <Grid
-          gridTemplateColumns={"0.75fr 1fr"}
-          boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
+          gridTemplateColumns={["1fr", "1fr", "0.8fr 1fr"]}
+          boxShadow={"rgba(99, 99, 99, 0.4) 0px 2px 8px 0px"}
           borderRadius={"10px"}
-          h={"500px"}
+          // h={"500px"}
+          width={["90%", "80%", "80%"]}
+          // h={["600px", "600px", "700px"]}
+          // maxH={"95%"}
         >
           <Box
             bgGradient="linear(to-t, purple.400, blue.300 ,green.300)"
             color={"white"}
             borderLeftRadius={"10px"}
+            display={["none", "none", "block"]}
           >
             <Flex
               flexDir={"column"}
@@ -110,15 +169,23 @@ const page = () => {
               gap={"25px"}
             >
               <Flex flexDir={"column"} alignItems={"center"}>
-                <Icon as={IoMdChatbubbles} w={"50px"} h={"50px"} />
-                <Heading>Chat App</Heading>
+                <Icon as={IoMdChatbubbles} w={"70px"} h={"70px"} />
+                <Heading fontSize={"2.7rem"}>Chat App</Heading>
               </Flex>
-              <Text textAlign={"center"}>
+              <Text
+                textAlign={"center"}
+                fontSize={["1.2rem", "1.3rem", "1.5rem"]}
+              >
                 Share Your Smile With This World and Loved Ones
               </Text>
               <Flex flexDir={"column"} alignItems={"center"}>
-                <Icon as={VscCoffee} w={"50px"} h={"50px"} />
-                <Text textAlign={"center"}>Enjoy..!</Text>
+                <Icon as={VscCoffee} w={"70px"} h={"70px"} />
+                <Text
+                  textAlign={"center"}
+                  fontSize={["1.2rem", "1.3rem", "1.5rem"]}
+                >
+                  Enjoy..!
+                </Text>
               </Flex>
             </Flex>
           </Box>
@@ -126,18 +193,80 @@ const page = () => {
           <form onSubmit={handleSubmit}>
             <Flex
               flexDir={"column"}
-              p={"30px"}
+              p={["15px", "25px", "30px"]}
               gap={"15px"}
               justifyContent={"center"}
               h={"100%"}
+              // maxW={"70%"}
+              m={"auto"}
             >
+              <Flex justifyContent={"center"}>
+                <Icon
+                  as={IoMdChatbubbles}
+                  w={"70px"}
+                  h={"70px"}
+                  color={"blue.500"}
+                />
+              </Flex>
               <Heading
                 textAlign={"center"}
                 color={"purple.500"}
-                fontSize={"1.8rem"}
+                p={"10px 0"}
+                fontSize={["1.6rem", "1.8rem", "2.5rem"]}
               >
                 SIGN UP HERE
               </Heading>
+              <Box
+                position={"relative"}
+                // border={"1px solid red"}
+                maxW={"fit-content"}
+                m={"auto"}
+              >
+                {profile && (
+                  <Box mt="4">
+                    <Image
+                      src={URL.createObjectURL(profile)}
+                      alt="Preview"
+                      w={["100px", "120px"]}
+                      h={["100px", "120px"]}
+                      objectFit="cover"
+                      borderRadius={"50%"}
+                    />
+                  </Box>
+                )}
+                {!profile && (
+                  <Image
+                    src="/download.jpeg"
+                    w={["100px", "120px"]}
+                    h={["100px", "120px"]}
+                    objectFit="cover"
+                    borderRadius={"50%"}
+                  />
+                )}
+
+                <label htmlFor="image-input">
+                  <Input
+                    id="image-input"
+                    type="file"
+                    accept="image/*"
+                    style={{ display: "none" }}
+                    onChange={handleImageChange}
+                  />
+                  <IconButton
+                    as="span"
+                    aria-label="Add Image"
+                    icon={<FaPlus />}
+                    bg={"blue.500"}
+                    color={"green.100"}
+                    fontSize="20px"
+                    position="absolute"
+                    bottom="0"
+                    right="0"
+                    borderRadius={"50%"}
+                  />
+                </label>
+              </Box>
+
               <FormControl isRequired>
                 {/* <FormLabel color={"gray.600"}>Name</FormLabel> */}
                 <Input
@@ -146,6 +275,9 @@ const page = () => {
                   name="name"
                   value={user.name}
                   onChange={handleUser}
+                  // border={"1px solid grey"}
+                  fontSize={["1.2rem", "1.3rem", "1.5rem"]}
+                  py={["6", "6", "7"]}
                 />
               </FormControl>
               <FormControl isRequired>
@@ -156,6 +288,8 @@ const page = () => {
                   name="email"
                   value={user.email}
                   onChange={handleUser}
+                  fontSize={["1.2rem", "1.3rem", "1.5rem"]}
+                  py={["6", "6", "7"]}
                 />
               </FormControl>
               <FormControl isRequired>
@@ -166,6 +300,8 @@ const page = () => {
                   name="password"
                   value={user.password}
                   onChange={handleUser}
+                  fontSize={["1.2rem", "1.3rem", "1.5rem"]}
+                  py={["6", "6", "7"]}
                 />
               </FormControl>
               <FormControl isRequired>
@@ -176,6 +312,8 @@ const page = () => {
                   name="confirmPassword"
                   value={user.confirmPassword}
                   onChange={handleUser}
+                  fontSize={["1.2rem", "1.3rem", "1.5rem"]}
+                  py={["6", "6", "7"]}
                 />
               </FormControl>
               <Button
@@ -184,10 +322,15 @@ const page = () => {
                 _hover={{
                   bgGradient: "linear(to-l, purple.500, blue.400 ,green.400)",
                 }}
+                fontSize={["1.2rem", "1.3rem", "1.5rem"]}
+                py={["6", "6", "7"]}
               >
                 Sign up
               </Button>
-              <Text textAlign={"center"}>
+              <Text
+                textAlign={"center"}
+                fontSize={["1.1rem", "1.25rem", "1.5rem"]}
+              >
                 Already Signed Up?{" "}
                 <Box
                   as="span"
@@ -197,6 +340,7 @@ const page = () => {
                   onClick={() => {
                     router.push("/login");
                   }}
+                  fontSize={["1.1rem", "1.25rem", "1.5rem"]}
                 >
                   Login Please!
                 </Box>
@@ -209,4 +353,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

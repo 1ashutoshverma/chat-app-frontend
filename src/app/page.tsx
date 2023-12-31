@@ -18,7 +18,6 @@ const Home: React.FC = () => {
 
   return (
     <main className={styles.main}>
-      <Navbar height={"72px"} />
       <Homepage />
     </main>
   );
