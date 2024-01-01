@@ -136,22 +136,25 @@ const Page = () => {
 
   return (
     <Box>
+      <Box w={"100vw"} h={"100vh"} position={"fixed"} zIndex={"-1"}>
+        <Box w={"100vw"} h={"30vh"} bg={"blue.400"}></Box>
+        <Box w={"100vw"} h={"70vh"}></Box>
+      </Box>
       <Flex
-        width={"100vw"}
-        height={"100vh"}
+        w={"100vw"}
+        h={"100vh"}
         justifyContent={"center"}
         alignItems={"center"}
-        maxW={"1280px"}
+        maxW={"1980px"}
         m={"auto"}
       >
         <Grid
-          gridTemplateColumns={["1fr", "1fr", "0.8fr 1fr"]}
+          gridTemplateColumns={["1fr", "1fr", "0.6fr 1fr", "1fr 1fr"]}
           boxShadow={"rgba(99, 99, 99, 0.4) 0px 2px 8px 0px"}
           borderRadius={"10px"}
-          // h={"500px"}
-          width={["90%", "80%", "80%"]}
-          // h={["600px", "600px", "700px"]}
-          // maxH={"95%"}
+          width={["90%", "80%", "90%"]}
+          minH={"90%"}
+          bg={"white"}
         >
           <Box
             bgGradient="linear(to-t, purple.400, blue.300 ,green.300)"
@@ -193,42 +196,39 @@ const Page = () => {
           <form onSubmit={handleSubmit}>
             <Flex
               flexDir={"column"}
-              p={["15px", "25px", "30px"]}
-              gap={"15px"}
+              p={["15px", "30px", "40px", "30px 40px", "15px 70px"]}
+              gap={"10px"}
               justifyContent={"center"}
+              // alignItems={"center"}
+              // border={"1px solid red"}
               h={"100%"}
-              // maxW={"70%"}
               m={"auto"}
             >
               <Flex justifyContent={"center"}>
                 <Icon
                   as={IoMdChatbubbles}
-                  w={"70px"}
-                  h={"70px"}
+                  w={["60px", "100px", "70px"]}
+                  h={["60px", "100px", "70px"]}
                   color={"blue.500"}
                 />
               </Flex>
               <Heading
                 textAlign={"center"}
                 color={"purple.500"}
-                p={"10px 0"}
-                fontSize={["1.6rem", "1.8rem", "2.5rem"]}
+                p={["8px 0", "10px 0"]}
+                fontSize={["1.7rem", "2.5rem", "2.5rem"]}
               >
                 SIGN UP HERE
               </Heading>
-              <Box
-                position={"relative"}
-                // border={"1px solid red"}
-                maxW={"fit-content"}
-                m={"auto"}
-              >
+
+              <Box position={"relative"} m={"auto"} mt={"0"} mb={"0"}>
                 {profile && (
-                  <Box mt="4">
+                  <Box>
                     <Image
                       src={URL.createObjectURL(profile)}
                       alt="Preview"
-                      w={["100px", "120px"]}
-                      h={["100px", "120px"]}
+                      w={["90px", "110px", "110px"]}
+                      h={["90px", "110px", "110px"]}
                       objectFit="cover"
                       borderRadius={"50%"}
                     />
@@ -258,7 +258,7 @@ const Page = () => {
                     icon={<FaPlus />}
                     bg={"blue.500"}
                     color={"green.100"}
-                    fontSize="20px"
+                    fontSize={"20px"}
                     position="absolute"
                     bottom="0"
                     right="0"
@@ -277,7 +277,8 @@ const Page = () => {
                   onChange={handleUser}
                   // border={"1px solid grey"}
                   fontSize={["1.2rem", "1.3rem", "1.5rem"]}
-                  py={["6", "6", "7"]}
+                  py={["6", "6", "6", "6", "7"]}
+                  m={"8px 0px"}
                 />
               </FormControl>
               <FormControl isRequired>
@@ -289,7 +290,8 @@ const Page = () => {
                   value={user.email}
                   onChange={handleUser}
                   fontSize={["1.2rem", "1.3rem", "1.5rem"]}
-                  py={["6", "6", "7"]}
+                  py={["6", "6", "6", "6", "7"]}
+                  m={"8px 0px"}
                 />
               </FormControl>
               <FormControl isRequired>
@@ -301,7 +303,8 @@ const Page = () => {
                   value={user.password}
                   onChange={handleUser}
                   fontSize={["1.2rem", "1.3rem", "1.5rem"]}
-                  py={["6", "6", "7"]}
+                  py={["6", "6", "6", "7"]}
+                  m={"8px 0px"}
                 />
               </FormControl>
               <FormControl isRequired>
@@ -313,7 +316,8 @@ const Page = () => {
                   value={user.confirmPassword}
                   onChange={handleUser}
                   fontSize={["1.2rem", "1.3rem", "1.5rem"]}
-                  py={["6", "6", "7"]}
+                  py={["6", "6", "6", "6", "7"]}
+                  m={"8px 0px"}
                 />
               </FormControl>
               <Button
@@ -323,7 +327,8 @@ const Page = () => {
                   bgGradient: "linear(to-l, purple.500, blue.400 ,green.400)",
                 }}
                 fontSize={["1.2rem", "1.3rem", "1.5rem"]}
-                py={["6", "6", "7"]}
+                py={["6", "6", "6", "6", "7"]}
+                m={"8px 0px"}
               >
                 Sign up
               </Button>

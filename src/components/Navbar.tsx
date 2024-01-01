@@ -68,7 +68,11 @@ const Navbar: JSXElementConstructor<NavbarInterface> = ({ height }) => {
             borderRadius="50%"
           />
           <Menu>
-            <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+            <MenuButton
+              as={Button}
+              rightIcon={<ChevronDownIcon />}
+              // style={{ backgroundColor: "white" }}
+            >
               {`${name}`}
             </MenuButton>
             <MenuList mt="10px">
@@ -77,10 +81,7 @@ const Navbar: JSXElementConstructor<NavbarInterface> = ({ height }) => {
                 <MenuItem>Settings</MenuItem>
                 <MenuItem
                   onClick={() => {
-                    logoutRequest(baseUrl + "/user/logout", {
-                      _id: _id,
-                      newMessages: {},
-                    });
+                    logoutRequest();
                   }}
                 >
                   Logout

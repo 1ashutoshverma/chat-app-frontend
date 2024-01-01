@@ -1,5 +1,14 @@
 import React, { useEffect, useRef, useMemo, useCallback } from "react";
-import { Box, Button, Flex, Grid, Image, Input, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Grid,
+  Image,
+  Input,
+  Skeleton,
+  Text,
+} from "@chakra-ui/react";
 import { Socket, io } from "socket.io-client";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
@@ -108,12 +117,12 @@ const Homepage = () => {
     scrollToBottom();
   }, [scrollToBottom, messages]);
 
+  console.log(privateId);
+
   return (
     <Flex
       w={"100vw"}
       h={"100vh"}
-      // border={"1px solid red"}
-      // bg={"gray.100"}
       justifyContent={["", "", "center"]}
       alignItems={["", "", "center"]}
     >
@@ -121,12 +130,14 @@ const Homepage = () => {
         <Box w={"100vw"} h={"30vh"} bg={"blue.400"}></Box>
         <Box w={"100vw"} h={"70vh"}></Box>
       </Box>
+
       <Box
         boxShadow={"rgba(0, 0, 0, 0.2) 0px 4px 12px"}
         w={["100%", "100%", "96%"]}
         maxH={["100%", "100%", "95%"]}
         borderRadius={"10px"}
         bg={"white"}
+        // border={"1px solid green"}
       >
         <Navbar height={"72px"} />
         <Grid
@@ -169,17 +180,33 @@ const Homepage = () => {
               border={"1px solid rgba(105, 105, 105, 0.2)"}
               h={"70px"}
             >
-              <Image
-                alt=""
-                w="50px"
-                h="50px"
-                borderRadius="50%"
-                src={
-                  privateId === ""
-                    ? "https://via.placeholder.com/200x200.png"
-                    : privateId.avatar
-                }
-              />
+              <Box position={"relative"}>
+                <Image
+                  alt=""
+                  w="50px"
+                  h="50px"
+                  borderRadius="50%"
+                  src={
+                    privateId === ""
+                      ? "https://via.placeholder.com/200x200.png"
+                      : privateId.avatar
+                  }
+                />
+                <Box
+                  h={"10px"}
+                  w={"10px"}
+                  style={{
+                    backgroundColor:
+                      privateId?.status === "online" ? "green" : "#C53030",
+                    display: privateId ? "block" : "none",
+                  }}
+                  borderRadius={"50%"}
+                  position={"absolute"}
+                  top={"40px"}
+                  zIndex={10}
+                  left={"5px"}
+                ></Box>
+              </Box>
               <Text fontWeight={"500"} fontSize={["1rem", "1.1rem", "1.3rem"]}>
                 {privateId === "" ? newRoom : privateId.name}
               </Text>
@@ -192,7 +219,7 @@ const Homepage = () => {
             >
               {messages.map((e) => {
                 return (
-                  <Flex flexDir={"column"} key={e._id} padding={"10Px"}>
+                  <Flex flexDir={"column"} key={e._id} padding={"10px"}>
                     <Box
                       bg={"gray.300"}
                       w={"fit-content"}
