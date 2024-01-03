@@ -7,7 +7,7 @@ import ProvidersRedux from "@/redux/providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Chat Application",
+  title: "Chat App",
   description: "Chat Aplication for users",
 };
 

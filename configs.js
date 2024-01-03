@@ -1,4 +1,5 @@
-export const baseUrl = "http://localhost:8080";
+// export const baseUrl = "http://localhost:8080";
+export const baseUrl = "http://3.109.153.206:8080";
 // export const baseUrl = "https://chat-app-backend-iota-drab.vercel.app";
 
 import { initializeApp } from "firebase/app";

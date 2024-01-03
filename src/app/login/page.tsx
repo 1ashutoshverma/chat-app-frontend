@@ -50,6 +50,8 @@ const page = () => {
     async (url: string, obj: object) => {
       try {
         let res = await Axios.post(url, obj);
+        console.log(res);
+
         toast({
           description: res.data.message,
           status: "success",
@@ -57,7 +59,7 @@ const page = () => {
           isClosable: true,
           position: "top",
         });
-        dispatch(login());
+        dispatch(login(res.data.userData));
       } catch (error: any) {
         // console.log(error);
         toast({

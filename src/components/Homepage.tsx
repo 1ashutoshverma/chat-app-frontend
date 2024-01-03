@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useMemo, useCallback } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useMemo,
+  useCallback,
+  useState,
+} from "react";
 import {
   Box,
   Button,
@@ -24,6 +30,9 @@ import LeftTab from "./LeftTab";
 import { baseUrl } from "../../configs";
 import { url } from "inspector";
 import Navbar from "./Navbar";
+
+import data from "@emoji-mart/data";
+import Picker from "@emoji-mart/react";
 
 const Homepage = () => {
   const { _id, name, avatar } = useSelector<RootState, AuthState>(
@@ -117,7 +126,8 @@ const Homepage = () => {
     scrollToBottom();
   }, [scrollToBottom, messages]);
 
-  console.log(privateId);
+  // console.log(privateId);
+  const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
 
   return (
     <Flex
@@ -266,7 +276,7 @@ const Homepage = () => {
               })}
             </Box>
 
-            <Box bg={"white"} padding={"6px"} borderRadius={"10px"} m={"5px"}>
+            {/* <Box bg={"white"} padding={"6px"} borderRadius={"10px"} m={"5px"}>
               <form
                 onSubmit={(e) => {
                   handleClick();
@@ -285,6 +295,52 @@ const Homepage = () => {
                   />
                   <Button type="submit">Send</Button>
                 </Flex>
+              </form>
+            </Box> */}
+            <Box
+              bg="white"
+              padding="6px"
+              borderRadius="10px"
+              m="5px"
+              position="relative"
+            >
+              <form
+                onSubmit={(e) => {
+                  handleClick();
+                  e.preventDefault();
+                }}
+              >
+                <Flex>
+                  <Button
+                    // position="absolute"
+                    // right="10px"
+                    // bottom="10px"
+                    onClick={() => setIsEmojiPickerOpen(!isEmojiPickerOpen)}
+                  >
+                    😀
+                  </Button>
+                  <Input
+                    placeholder="Type your message"
+                    value={content}
+                    onChange={(e) => dispatch(setContent(e.target.value))}
+                    border="none"
+                    focusBorderColor="transparent"
+                  />
+
+                  <Button type="submit">Send</Button>
+                </Flex>
+                <Box position={"absolute"} bottom={"55px"}>
+                  {isEmojiPickerOpen && (
+                    <Picker
+                      data={data}
+                      onEmojiSelect={(emoji: any) => {
+                        dispatch(setContent(content + emoji.native));
+                        setIsEmojiPickerOpen(false);
+                      }}
+                      theme={"light"}
+                    />
+                  )}
+                </Box>
               </form>
             </Box>
           </Flex>
