@@ -96,7 +96,7 @@ const Navbar: JSXElementConstructor<NavbarInterface> = ({ height }) => {
         </Flex>
       )
     );
-  }, [isAuth]);
+  }, [isAuth, avatar, name, logoutRequest]);
 
   return (
     <Box h={height} boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}>

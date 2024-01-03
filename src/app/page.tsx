@@ -14,7 +14,7 @@ const Home: React.FC = () => {
     if (!isAuth) {
       router.push("/login");
     }
-  }, [isAuth]);
+  }, [isAuth, router]);
 
   return (
     <main className={styles.main}>

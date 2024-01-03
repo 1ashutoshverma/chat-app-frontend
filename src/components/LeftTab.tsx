@@ -232,7 +232,7 @@ const LeftTab = () => {
           <Divider w={"90%"} m={"auto"} />
         </Box>
       )),
-    [_id, privateId, joinPrivateChat, members, notifications]
+    [_id, privateId, joinPrivateChat, notifications]
   );
 
   const [privateSearch, setPrivateSearch] = useState<string>("");
@@ -256,7 +256,7 @@ const LeftTab = () => {
       arr = [];
     }
     setSearchedPrivate(arr);
-  }, [privateSearch]);
+  }, [privateSearch, members]);
 
   useEffect(() => {
     let arr: string[] = [];
@@ -273,7 +273,7 @@ const LeftTab = () => {
       arr = [];
     }
     setSearchedPublic(arr);
-  }, [publicSearch, rooms]);
+  }, [publicSearch]);
 
   return (
     <Tabs

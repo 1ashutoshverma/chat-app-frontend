@@ -79,7 +79,7 @@ const Page = () => {
     if (isAuth) {
       router.push("/");
     }
-  }, [isAuth]);
+  }, [isAuth, router]);
 
   const [profile, setProfile] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -241,6 +241,7 @@ const Page = () => {
                     h={["100px", "120px"]}
                     objectFit="cover"
                     borderRadius={"50%"}
+                    alt=""
                   />
                 )}
 

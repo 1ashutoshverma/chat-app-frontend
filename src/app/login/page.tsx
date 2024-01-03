@@ -33,7 +33,7 @@ const userInitialObject: IntialState = {
   password: "",
 };
 
-const page = () => {
+const Page = () => {
   const [user, setUser] = useState(userInitialObject);
   const handleUser = (e: any) => {
     const { name, value } = e.target;
@@ -59,6 +59,7 @@ const page = () => {
           isClosable: true,
           position: "top",
         });
+
         dispatch(login(res.data.userData));
       } catch (error: any) {
         // console.log(error);
@@ -71,7 +72,7 @@ const page = () => {
         });
       }
     },
-    [dispatch, toast, login]
+    [dispatch, toast]
   );
 
   const handleSubmit = (e: any) => {
@@ -87,7 +88,7 @@ const page = () => {
     if (isAuth) {
       router.push("/");
     }
-  }, [isAuth]);
+  }, [isAuth, router]);
 
   return (
     <Box>
@@ -231,6 +232,7 @@ const page = () => {
                 <Image
                   src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
                   w={"10%"}
+                  alt=""
                 ></Image>
                 Login With Google
               </Button>
@@ -260,4 +262,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

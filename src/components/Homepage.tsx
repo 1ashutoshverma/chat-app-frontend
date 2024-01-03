@@ -28,7 +28,7 @@ import {
 } from "@/redux/chatSlice/chatSlice";
 import LeftTab from "./LeftTab";
 import { baseUrl } from "../../configs";
-import { url } from "inspector";
+
 import Navbar from "./Navbar";
 
 import data from "@emoji-mart/data";
@@ -78,7 +78,7 @@ const Homepage = () => {
     socket.off("room-messages").on("room-messages", (msg) => {
       dispatch(setMessage(msg));
     });
-  }, [dispatch, name, newRoom, content, typeRoom, _id, avatar]);
+  }, [dispatch, name, newRoom, content, typeRoom, _id, avatar, socket]);
 
   const scrollToBottom = useCallback(() => {
     if (chatContainerRef.current) {
