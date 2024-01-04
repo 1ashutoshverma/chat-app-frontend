@@ -174,7 +174,7 @@ const Page = () => {
                   textAlign={"center"}
                   color={"purple.500"}
                   // p={["8px 0", "10px 0"]}
-                  paddingBottom={["8px", "10px"]}
+                  // paddingBottom={["8px", "10px"]}
                   fontSize={["1.5rem", "1.8rem", "2.1rem"]}
                   // border={"1px solid red"}
                 >

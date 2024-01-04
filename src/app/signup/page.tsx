@@ -147,17 +147,13 @@ const Page = () => {
         alignItems={"center"}
         maxW={"1280px"}
         m={"auto"}
-        // border={"1px solid red"}
       >
         <Grid
           gridTemplateColumns={["1fr", "1fr", "0.6fr 1fr", "1fr 1fr"]}
           boxShadow={"rgba(99, 99, 99, 0.4) 0px 2px 8px 0px"}
           borderRadius={"10px"}
           width={["90%", "80%", "90%"]}
-          // minH={"90%"}
           bg={"white"}
-
-          // border={"1px solid red"}
         >
           <Box
             bgGradient="linear(to-t, purple.400, blue.300 ,green.300)"
@@ -199,51 +195,22 @@ const Page = () => {
           <form onSubmit={handleSubmit}>
             <Flex
               flexDir={"column"}
-              // border={"1px solid red"}
-              // p={["15px", "30px", "40px", "30px 40px", "15px 70px"]}
               p={["5%", "5%", "5%", "4% 5%", "5% 5%"]}
               gap={"8px"}
               justifyContent={"center"}
-              // alignItems={"center"}
-              // border={"1px solid red"}
               h={"100%"}
               m={"auto"}
             >
-              {/* <Flex justifyContent={"center"}>
-                <Icon
-                  as={IoMdChatbubbles}
-                  w={["60px", "100px", "70px"]}
-                  h={["60px", "100px", "70px"]}
-                  color={"blue.500"}
-                />
-              </Flex>
-              <Heading
-                textAlign={"center"}
-                color={"purple.500"}
-                p={["8px 0", "10px 0"]}
-                fontSize={["1.5rem", "1.8rem", "2.1rem"]}
-              >
-                SIGN UP HERE
-              </Heading> */}
-              <Flex
-                justifyContent={"center"}
-                // flexDir={"column"}
-                alignItems={"center"}
-              >
+              <Flex justifyContent={"center"} alignItems={"center"}>
                 <Icon
                   as={IoMdChatbubbles}
                   w={["70px", "70px", "70px"]}
                   h={["70px", "70px", "70px"]}
                   color={"blue.500"}
-                  // border={"1px solid red"}
                 />
                 <Heading
-                  // textAlign={"center"}
                   color={"purple.500"}
-                  // p={["8px 0", "10px 0"]}
-                  // paddingBottom={["8px", "10px"]}
                   fontSize={["1.5rem", "1.7rem", "2rem"]}
-                  // border={"1px solid red"}
                 >
                   SIGN UP HERE
                 </Heading>
