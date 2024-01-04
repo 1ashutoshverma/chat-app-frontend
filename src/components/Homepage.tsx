@@ -128,7 +128,7 @@ const Homepage = () => {
   }, [scrollToBottom, messages]);
 
   // console.log(privateId);
-  // console.log(Cookies.get());
+  console.log(Cookies.get());
   // console.log(document.cookie);
 
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
