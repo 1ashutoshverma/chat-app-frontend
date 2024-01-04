@@ -153,8 +153,8 @@ const Page = () => {
           <form onSubmit={handleSubmit}>
             <Flex
               flexDir={"column"}
-              p={["5%", "5%", "5%", "5% 5%", "7% 5%"]}
-              gap={"15px"}
+              p={["5%", "5%", "5%", "5% 7%", "7% 7%"]}
+              gap={"25px"}
               justifyContent={"center"}
               h={"100%"}
               m={"auto"}
@@ -202,7 +202,7 @@ const Page = () => {
                   value={user.password}
                   onChange={handleUser}
                   fontSize={["1rem", "1.1rem", "1.3rem"]}
-                  py={["5", "6", "6", "6", "7"]}
+                  py={["5", "6", "6", "6", ""]}
                 />
               </FormControl>
               <Text fontSize={["1rem", "1.1rem", "1.3rem"]}>
