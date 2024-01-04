@@ -60,7 +60,8 @@ const Page = () => {
           position: "top",
         });
 
-        dispatch(login(res.data.userData));
+        // dispatch(login(res.data.userData));
+        dispatch(login());
       } catch (error: any) {
         // console.log(error);
         toast({
