@@ -220,7 +220,7 @@ const Page = () => {
               >
                 Login
               </Button>
-              <Button
+              {/* <Button
                 // bg={"#5086EC"}
                 // color={"white"}
                 _hover={{
@@ -243,7 +243,7 @@ const Page = () => {
                   alt=""
                 ></Image>
                 Login With Google
-              </Button>
+              </Button> */}
               <Text
                 textAlign={"center"}
                 fontSize={["1rem", "1.1rem", "1.3rem"]}
