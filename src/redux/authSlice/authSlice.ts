@@ -26,18 +26,18 @@ const authSlice = createSlice({
     name:"auth", 
     initialState, 
     reducers:{
-        // login:(state,action: PayloadAction<any>)=>{
-        //     state.name = action.payload.name
-        //     state._id = action.payload.userId
-        //     state.avatar=action.payload.avatar
-        //     state.isAuth = true
-        // },
-        login:(state)=>{
-            state.name = Cookies.get("name")||""
-            state._id = Cookies.get("userId")||""
-            state.avatar=Cookies.get("avatar")||""
+        login:(state,action: PayloadAction<any>)=>{
+            state.name = action.payload.name
+            state._id = action.payload.userId
+            state.avatar=action.payload.avatar
             state.isAuth = true
         },
+        // login:(state)=>{
+        //     state.name = Cookies.get("name")||""
+        //     state._id = Cookies.get("userId")||""
+        //     state.avatar=Cookies.get("avatar")||""
+        //     state.isAuth = true
+        // },
         logout:(state)=>{
             state.name = ""
             state._id = ""

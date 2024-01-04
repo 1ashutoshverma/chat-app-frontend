@@ -33,6 +33,7 @@ import Navbar from "./Navbar";
 
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
+import Cookies from "js-cookie";
 
 const Homepage = () => {
   const { _id, name, avatar } = useSelector<RootState, AuthState>(
@@ -127,6 +128,9 @@ const Homepage = () => {
   }, [scrollToBottom, messages]);
 
   // console.log(privateId);
+  // console.log(Cookies.get());
+  // console.log(document.cookie);
+
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
 
   return (
