@@ -152,7 +152,7 @@ const Page = () => {
           <form onSubmit={handleSubmit}>
             <Flex
               flexDir={"column"}
-              p={["5%", "5%", "5%", "4% 5%", "5% 5%"]}
+              p={["5%", "5%", "5%", "5% 5%", "7% 5%"]}
               gap={"15px"}
               justifyContent={"center"}
               h={"100%"}
@@ -160,7 +160,7 @@ const Page = () => {
             >
               <Flex
                 justifyContent={"center"}
-                flexDir={"column"}
+                // flexDir={"column"}
                 alignItems={"center"}
               >
                 <Icon

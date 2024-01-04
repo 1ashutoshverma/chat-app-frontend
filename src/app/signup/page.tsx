@@ -216,7 +216,7 @@ const Page = () => {
                   h={["60px", "100px", "70px"]}
                   color={"blue.500"}
                 />
-              </Flex> */}
+              </Flex>
               <Heading
                 textAlign={"center"}
                 color={"purple.500"}
@@ -224,7 +224,30 @@ const Page = () => {
                 fontSize={["1.5rem", "1.8rem", "2.1rem"]}
               >
                 SIGN UP HERE
-              </Heading>
+              </Heading> */}
+              <Flex
+                justifyContent={"center"}
+                // flexDir={"column"}
+                alignItems={"center"}
+              >
+                <Icon
+                  as={IoMdChatbubbles}
+                  w={["70px", "70px", "70px"]}
+                  h={["70px", "70px", "70px"]}
+                  color={"blue.500"}
+                  // border={"1px solid red"}
+                />
+                <Heading
+                  // textAlign={"center"}
+                  color={"purple.500"}
+                  // p={["8px 0", "10px 0"]}
+                  // paddingBottom={["8px", "10px"]}
+                  fontSize={["1.5rem", "1.7rem", "2rem"]}
+                  // border={"1px solid red"}
+                >
+                  SIGN UP HERE
+                </Heading>
+              </Flex>
 
               <Box position={"relative"} m={"auto"} mt={"0"} mb={"0"}>
                 {profile && (
