@@ -124,13 +124,8 @@ const Page = () => {
         console.log("Something went wrong in firebase!");
       }
     } else {
-      toast({
-        description: "Select your profile pic",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "top",
-      });
+      const { confirmPassword, ...rest } = user;
+      signUp(baseUrl + "/user/signup", { ...rest });
     }
   };
 
