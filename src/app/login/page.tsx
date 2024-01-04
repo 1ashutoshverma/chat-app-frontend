@@ -101,7 +101,7 @@ const Page = () => {
         height={"100vh"}
         justifyContent={"center"}
         alignItems={"center"}
-        maxW={"1980px"}
+        maxW={"1280px"}
         m={"auto"}
       >
         <Grid
@@ -109,7 +109,7 @@ const Page = () => {
           boxShadow={"rgba(99, 99, 99, 0.4) 0px 2px 8px 0px"}
           borderRadius={"10px"}
           width={["90%", "80%", "90%"]}
-          minH={"90%"}
+          // minH={"90%"}
           bg={"white"}
         >
           <Box
@@ -152,28 +152,35 @@ const Page = () => {
           <form onSubmit={handleSubmit}>
             <Flex
               flexDir={"column"}
-              p={["15px", "30px", "40px", "30px 40px", "30px 70px"]}
-              gap={"20px"}
+              p={["5%", "5%", "5%", "4% 5%", "5% 5%"]}
+              gap={"15px"}
               justifyContent={"center"}
               h={"100%"}
               m={"auto"}
             >
-              <Flex justifyContent={"center"}>
+              <Flex
+                justifyContent={"center"}
+                flexDir={"column"}
+                alignItems={"center"}
+              >
                 <Icon
                   as={IoMdChatbubbles}
-                  w={["70px", "100px", "70px"]}
-                  h={["70px", "100px", "70px"]}
+                  w={["70px", "70px", "70px"]}
+                  h={["70px", "70px", "70px"]}
                   color={"blue.500"}
+                  // border={"1px solid red"}
                 />
+                <Heading
+                  textAlign={"center"}
+                  color={"purple.500"}
+                  // p={["8px 0", "10px 0"]}
+                  paddingBottom={["8px", "10px"]}
+                  fontSize={["1.5rem", "1.8rem", "2.1rem"]}
+                  // border={"1px solid red"}
+                >
+                  Login Here
+                </Heading>
               </Flex>
-              <Heading
-                textAlign={"center"}
-                color={"purple.500"}
-                p={["8px 0", "10px 0"]}
-                fontSize={["1.7rem", "2.5rem", "2.5rem"]}
-              >
-                Login Here
-              </Heading>
 
               <FormControl isRequired>
                 <Input
@@ -182,8 +189,8 @@ const Page = () => {
                   name="email"
                   value={user.email}
                   onChange={handleUser}
-                  fontSize={["1.2rem", "1.3rem", "1.5rem"]}
-                  py={["6", "7", "7", "8"]}
+                  fontSize={["1rem", "1.1rem", "1.3rem"]}
+                  py={["5", "6", "6", "6", "7"]}
                 />
               </FormControl>
               <FormControl isRequired>
@@ -193,11 +200,11 @@ const Page = () => {
                   name="password"
                   value={user.password}
                   onChange={handleUser}
-                  fontSize={["1.2rem", "1.3rem", "1.5rem"]}
-                  py={["6", "7", "7", "8"]}
+                  fontSize={["1rem", "1.1rem", "1.3rem"]}
+                  py={["5", "6", "6", "6", "7"]}
                 />
               </FormControl>
-              <Text fontSize={["1.1rem", "1.25rem", "1.5rem"]}>
+              <Text fontSize={["1rem", "1.1rem", "1.3rem"]}>
                 Forget password?{" "}
               </Text>
               <Button
@@ -207,8 +214,8 @@ const Page = () => {
                 _hover={{
                   bgGradient: "linear(to-l, purple.500, blue.400 ,green.400)",
                 }}
-                fontSize={["1.2rem", "1.3rem", "1.5rem"]}
-                py={["6", "7", "7", "8"]}
+                fontSize={["1rem", "1.1rem", "1.3rem"]}
+                py={["5", "6", "6", "6", "7"]}
               >
                 Login
               </Button>
@@ -226,8 +233,8 @@ const Page = () => {
                 // borderColor={"red.200"}
                 // border={"1px solid blue.400"}
                 onClick={HandleGoogleLogin}
-                fontSize={["1.2rem", "1.3rem", "1.5rem"]}
-                py={["6", "7", "7", "8"]}
+                fontSize={["1rem", "1.1rem", "1.3rem"]}
+                py={["5", "6", "6", "6", "7"]}
               >
                 <Image
                   src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
@@ -238,7 +245,7 @@ const Page = () => {
               </Button>
               <Text
                 textAlign={"center"}
-                fontSize={["1.1rem", "1.5rem", "1.5rem", "1.5rem"]}
+                fontSize={["1rem", "1.1rem", "1.3rem"]}
               >
                 New Here?{" "}
                 <Box
@@ -249,7 +256,7 @@ const Page = () => {
                   onClick={() => {
                     router.push("/signup");
                   }}
-                  fontSize={["1.1rem", "1.5rem", "1.5rem"]}
+                  fontSize={["1rem", "1.1rem", "1.3rem"]}
                 >
                   Sign Up Please!
                 </Box>
