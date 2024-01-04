@@ -186,7 +186,7 @@ const Page = () => {
               <FormControl isRequired>
                 <Input
                   type="email"
-                  placeholder="First name"
+                  placeholder="Email"
                   name="email"
                   value={user.email}
                   onChange={handleUser}
@@ -197,7 +197,7 @@ const Page = () => {
               <FormControl isRequired>
                 <Input
                   type="password"
-                  placeholder="First name"
+                  placeholder="Password"
                   name="password"
                   value={user.password}
                   onChange={handleUser}
@@ -206,7 +206,7 @@ const Page = () => {
                 />
               </FormControl>
               <Text fontSize={["1rem", "1.1rem", "1.3rem"]}>
-                Forget password?{" "}
+                Forgot password?{" "}
               </Text>
               <Button
                 type="submit"
