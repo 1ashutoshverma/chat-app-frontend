@@ -25,6 +25,7 @@ import {
 } from "@chakra-ui/react";
 import { BiAlignLeft, BiChevronLeft } from "react-icons/bi";
 import { ChatState, setShowLeftTab } from "@/redux/chatSlice/chatSlice";
+import { useRouter } from "next/navigation";
 
 type NavbarInterface = {
   height: string;
@@ -42,61 +43,21 @@ const Navbar: JSXElementConstructor<NavbarInterface> = ({ height }) => {
     (store) => store.chat
   );
 
+  const router = useRouter();
+
   const logoutRequest = useCallback(async () => {
     try {
       let res = await Axios.post(baseUrl + "/user/logout", {
         _id: _id,
         newMessages: {},
       });
-      console.log(res);
+      // console.log(res);
+      router.push("/login");
       dispatch(logout());
     } catch (error) {
       console.log(error);
     }
-  }, [dispatch, _id]);
-
-  //login and logout component update
-  useEffect(() => {
-    setLoginComponent(
-      isAuth ? (
-        <Flex justifyContent="center" alignItems="center" gap="10px">
-          <Image
-            src={`${avatar}`}
-            alt=""
-            w="50px"
-            h="50px"
-            borderRadius="50%"
-          />
-          <Menu>
-            <MenuButton
-              as={Button}
-              rightIcon={<ChevronDownIcon />}
-              // style={{ backgroundColor: "white" }}
-            >
-              {`${name}`}
-            </MenuButton>
-            <MenuList mt="10px">
-              <MenuGroup title="Profile">
-                <MenuItem>My Account</MenuItem>
-                <MenuItem>Settings</MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    logoutRequest();
-                  }}
-                >
-                  Logout
-                </MenuItem>
-              </MenuGroup>
-            </MenuList>
-          </Menu>
-        </Flex>
-      ) : (
-        <Flex>
-          <Link href="/login">Login</Link>
-        </Flex>
-      )
-    );
-  }, [isAuth, avatar, name, logoutRequest]);
+  }, [dispatch, _id, router]);
 
   return (
     <Box h={height} boxShadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}>
@@ -104,7 +65,6 @@ const Navbar: JSXElementConstructor<NavbarInterface> = ({ height }) => {
         justifyContent={"space-between"}
         alignItems={"center"}
         // borderBottom={"1px solid rgba(105,105,105,0.5)"}
-
         padding={"10px 30px"}
         // maxW={"1370px"}
         m={"auto"}
@@ -147,7 +107,39 @@ const Navbar: JSXElementConstructor<NavbarInterface> = ({ height }) => {
             </Heading>
           </Flex>
         </Link>
-        <Box>{loginComponent}</Box>
+        <Box>
+          <Flex justifyContent="center" alignItems="center" gap="10px">
+            <Image
+              src={`${avatar}`}
+              alt=""
+              w="50px"
+              h="50px"
+              borderRadius="50%"
+            />
+            <Menu>
+              <MenuButton
+                as={Button}
+                rightIcon={<ChevronDownIcon />}
+                // style={{ backgroundColor: "white" }}
+              >
+                {`${name}`}
+              </MenuButton>
+              <MenuList mt="10px">
+                <MenuGroup title="Profile">
+                  <MenuItem>My Account</MenuItem>
+                  <MenuItem>Settings</MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      logoutRequest();
+                    }}
+                  >
+                    Logout
+                  </MenuItem>
+                </MenuGroup>
+              </MenuList>
+            </Menu>
+          </Flex>
+        </Box>
       </Flex>
     </Box>
   );

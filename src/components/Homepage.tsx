@@ -34,9 +34,10 @@ import Navbar from "./Navbar";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 const Homepage = () => {
-  const { _id, name, avatar } = useSelector<RootState, AuthState>(
+  const { _id, name, avatar, isAuth } = useSelector<RootState, AuthState>(
     (store) => store.auth
   );
 
@@ -127,11 +128,25 @@ const Homepage = () => {
     scrollToBottom();
   }, [scrollToBottom, messages]);
 
-  // console.log(privateId);
-  console.log(Cookies.get());
-  // console.log(document.cookie);
-
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
+  const emojiPickerRef = useRef<HTMLDivElement | null>(null);
+
+  const handleClickOutside = (event: any) => {
+    if (
+      emojiPickerRef.current &&
+      !emojiPickerRef.current.contains(event.target as Node)
+    ) {
+      setIsEmojiPickerOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [emojiPickerRef]);
 
   return (
     <Flex
@@ -149,7 +164,7 @@ const Homepage = () => {
         boxShadow={"rgba(0, 0, 0, 0.2) 0px 4px 12px"}
         w={["100%", "100%", "96%"]}
         maxH={["100%", "100%", "95%"]}
-        borderRadius={"10px"}
+        borderRadius={["0px", "0px", "10px"]}
         bg={"white"}
         // border={"1px solid green"}
       >
@@ -316,9 +331,6 @@ const Homepage = () => {
               >
                 <Flex>
                   <Button
-                    // position="absolute"
-                    // right="10px"
-                    // bottom="10px"
                     onClick={() => setIsEmojiPickerOpen(!isEmojiPickerOpen)}
                   >
                     😀
@@ -333,7 +345,7 @@ const Homepage = () => {
 
                   <Button type="submit">Send</Button>
                 </Flex>
-                <Box position={"absolute"} bottom={"55px"}>
+                <Box position={"absolute"} bottom={"55px"} ref={emojiPickerRef}>
                   {isEmojiPickerOpen && (
                     <Picker
                       data={data}

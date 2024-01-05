@@ -22,6 +22,7 @@ import { login } from "@/redux/authSlice/authSlice";
 import Axios from "../../../axios";
 import { IoMdChatbubbles } from "react-icons/io";
 import { VscCoffee } from "react-icons/vsc";
+import Loading from "@/components/Loading";
 
 interface IntialState {
   email: string;
@@ -35,6 +36,7 @@ const userInitialObject: IntialState = {
 
 const Page = () => {
   const [user, setUser] = useState(userInitialObject);
+  const [loading, setLoading] = useState<boolean>(false);
   const handleUser = (e: any) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
@@ -48,9 +50,10 @@ const Page = () => {
 
   const loginRequest = useCallback(
     async (url: string, obj: object) => {
+      setLoading(true);
       try {
         let res = await Axios.post(url, obj);
-        console.log(res);
+        // console.log(res);
 
         toast({
           description: res.data.message,
@@ -61,6 +64,8 @@ const Page = () => {
         });
 
         dispatch(login(res.data.userData));
+        setLoading(false);
+        router.push("/");
         // dispatch(login());
       } catch (error: any) {
         // console.log(error);
@@ -73,7 +78,7 @@ const Page = () => {
         });
       }
     },
-    [dispatch, toast]
+    [dispatch, toast, loading]
   );
 
   const handleSubmit = (e: any) => {
@@ -90,6 +95,10 @@ const Page = () => {
       router.push("/");
     }
   }, [isAuth, router]);
+
+  // if (loading) {
+  //   return <Loading />;
+  // }
 
   return (
     <Box>
