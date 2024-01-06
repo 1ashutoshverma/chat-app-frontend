@@ -117,7 +117,7 @@ const Page = () => {
       // Get the download URL
       const url = await getDownloadURL(storageRef);
       if (url) {
-        console.log(url);
+        // console.log(url);
         const { confirmPassword, ...rest } = user;
         signUp(baseUrl + "/user/signup", { ...rest, avatar: url });
       } else {

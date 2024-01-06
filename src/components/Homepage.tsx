@@ -27,19 +27,19 @@ import {
   setNotifications,
 } from "@/redux/chatSlice/chatSlice";
 import LeftTab from "./LeftTab";
-import { baseUrl } from "../../configs";
 
 import Navbar from "./Navbar";
 
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
-import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
+import { baseUrl } from "../../configs";
 
 const Homepage = () => {
   const { _id, name, avatar, isAuth } = useSelector<RootState, AuthState>(
     (store) => store.auth
   );
+
+  // console.log("a", process.env.REACT_APP_BASE_URL);
 
   const {
     messages,
