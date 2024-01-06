@@ -53,7 +53,7 @@ const Homepage = () => {
 
   const dispatch = useDispatch();
 
-  const socket = useMemo(() => io(baseUrl), []);
+  const socket = useMemo(() => io(`${baseUrl}`), []);
 
   const handleClick = useCallback(() => {
     let time = new Date();
