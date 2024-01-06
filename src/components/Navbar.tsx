@@ -51,7 +51,6 @@ const Navbar: JSXElementConstructor<NavbarInterface> = ({ height }) => {
         _id: _id,
         newMessages: {},
       });
-      // console.log(res);
       router.push("/login");
       dispatch(logout());
     } catch (error) {
