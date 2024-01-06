@@ -19,6 +19,7 @@ Chat-App is a dynamic real-time messaging platform designed for seamless communi
 - Next.js
 - Chakra UI
 - Redux
+- TypeScript
 
 ### Backend
 
