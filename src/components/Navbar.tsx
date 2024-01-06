@@ -125,8 +125,8 @@ const Navbar: JSXElementConstructor<NavbarInterface> = ({ height }) => {
               </MenuButton>
               <MenuList mt="10px">
                 <MenuGroup title="Profile">
-                  <MenuItem>My Account</MenuItem>
-                  <MenuItem>Settings</MenuItem>
+                  {/* <MenuItem>My Account</MenuItem>
+                  <MenuItem>Settings</MenuItem> */}
                   <MenuItem
                     onClick={() => {
                       logoutRequest();

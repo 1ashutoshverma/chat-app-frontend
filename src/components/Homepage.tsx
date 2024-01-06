@@ -91,14 +91,14 @@ const Homepage = () => {
 
   useEffect(() => {
     if (name) {
-      socket.emit("new-user");
+      socket.emit("new-user", _id);
       socket.off("new-user").on("new-user", (members) => {
         dispatch(setMembers(members));
       });
     } else {
       socket.disconnect();
     }
-  }, [dispatch, name, socket]);
+  }, [dispatch, name, socket, _id]);
 
   useEffect(() => {
     socket.emit("join-room", { newRoom, previousRoom });
