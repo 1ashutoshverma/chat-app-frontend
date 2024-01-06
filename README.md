@@ -55,7 +55,7 @@ Chat-App is a dynamic real-time messaging platform designed for seamless communi
 
 # Contributer
 
-this is solo project made by <b>Ashutosh Verma</b>
+This is a solo project made by <b>Ashutosh Verma</b>
 
 - [Ashutosh Verma (GitHub)](https://github.com/1ashutoshverma)
 - [Ashutosh Verma (LinkedIn)](https://www.linkedin.com/in/1ashutoshverma/)
