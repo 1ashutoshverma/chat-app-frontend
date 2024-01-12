@@ -39,8 +39,6 @@ const Homepage = () => {
     (store) => store.auth
   );
 
-  // console.log("a", process.env.REACT_APP_BASE_URL);
-
   const {
     messages,
     content,
@@ -111,14 +109,28 @@ const Homepage = () => {
   useEffect(() => {
     socket.off("notification").on("notification", (room, type, sender) => {
       if (newRoom !== room) {
-        console.log(room, type, sender);
-        dispatch(
-          setNotifications({
-            room,
-            type,
-            sender,
-          })
-        );
+        if (type === "private") {
+          let arr = room.split("-");
+          console.log(arr, _id);
+          if (arr.includes(_id)) {
+            console.log("includes");
+            dispatch(
+              setNotifications({
+                room,
+                type,
+                sender,
+              })
+            );
+          }
+        } else {
+          dispatch(
+            setNotifications({
+              room,
+              type,
+              sender,
+            })
+          );
+        }
       }
     });
   }, [socket, newRoom, dispatch]);
