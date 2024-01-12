@@ -1,5 +1,5 @@
-export const baseUrl = "http://localhost:8080";
-// export const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+// export const baseUrl = "http://localhost:8080";
+export const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
