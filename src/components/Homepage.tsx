@@ -111,6 +111,7 @@ const Homepage = () => {
   useEffect(() => {
     socket.off("notification").on("notification", (room, type, sender) => {
       if (newRoom !== room) {
+        console.log(room, type, sender);
         dispatch(
           setNotifications({
             room,
