@@ -5,17 +5,8 @@ import React, {
   useCallback,
   useState,
 } from "react";
-import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  Image,
-  Input,
-  Skeleton,
-  Text,
-} from "@chakra-ui/react";
-import { Socket, io } from "socket.io-client";
+import { Box, Button, Flex, Grid, Image, Input, Text } from "@chakra-ui/react";
+import { io } from "socket.io-client";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { AuthState } from "@/redux/authSlice/authSlice";
@@ -26,12 +17,13 @@ import {
   setMessage,
   setNotifications,
 } from "@/redux/chatSlice/chatSlice";
-import LeftTab from "./LeftTab";
 
+import LeftTab from "./LeftTab";
 import Navbar from "./Navbar";
 
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
+
 import { baseUrl } from "../../configs";
 
 const Homepage = () => {
@@ -51,8 +43,10 @@ const Homepage = () => {
 
   const dispatch = useDispatch();
 
+  //Socket connection
   const socket = useMemo(() => io(`${baseUrl}`), []);
 
+  //Sending the message
   const handleClick = useCallback(() => {
     let time = new Date();
     const year = time.getFullYear().toString().padStart(2, "0");
@@ -80,13 +74,7 @@ const Homepage = () => {
     });
   }, [dispatch, name, newRoom, content, typeRoom, _id, avatar, socket]);
 
-  const scrollToBottom = useCallback(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop =
-        chatContainerRef.current.scrollHeight;
-    }
-  }, []);
-
+  //when new user joins
   useEffect(() => {
     if (name) {
       socket.emit("new-user", _id);
@@ -98,14 +86,15 @@ const Homepage = () => {
     }
   }, [dispatch, name, socket, _id]);
 
+  //when we get a new message
   useEffect(() => {
     socket.emit("join-room", { newRoom, previousRoom });
     socket.off("room-messages").on("room-messages", (msg) => {
-      // console.log(msg);
       dispatch(setMessage(msg));
     });
   }, [socket, newRoom, typeRoom, previousRoom, dispatch]);
 
+  //this is for the notifications
   useEffect(() => {
     socket.off("notification").on("notification", (room, type, sender) => {
       if (newRoom !== room) {
@@ -135,12 +124,22 @@ const Homepage = () => {
     });
   }, [socket, newRoom, dispatch]);
 
+  //==============Scroll to bottom start ========>
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
+
+  const scrollToBottom = useCallback(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
+  }, []);
 
   useEffect(() => {
     scrollToBottom();
   }, [scrollToBottom, messages]);
+  //============== Scroll to bottom end ========>
 
+  //============== Emoji Picker Start ==========>
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
   const emojiPickerRef = useRef<HTMLDivElement | null>(null);
 
@@ -155,11 +154,11 @@ const Homepage = () => {
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [emojiPickerRef]);
+  //==============Emoji Picker End ============>
 
   return (
     <Flex
@@ -308,33 +307,13 @@ const Homepage = () => {
               })}
             </Box>
 
-            {/* <Box bg={"white"} padding={"6px"} borderRadius={"10px"} m={"5px"}>
-              <form
-                onSubmit={(e) => {
-                  handleClick();
-                  e.preventDefault();
-                }}
-              >
-                <Flex>
-                  <Input
-                    placeholder="Type your message"
-                    value={content}
-                    onChange={(e) => {
-                      dispatch(setContent(e.target.value));
-                    }}
-                    border={"none"}
-                    focusBorderColor="transparent"
-                  />
-                  <Button type="submit">Send</Button>
-                </Flex>
-              </form>
-            </Box> */}
             <Box
               bg="white"
               padding="6px"
               borderRadius="10px"
               m="5px"
               position="relative"
+              // border={"1px solid red"}
             >
               <form
                 onSubmit={(e) => {

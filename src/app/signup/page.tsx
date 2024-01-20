@@ -42,6 +42,7 @@ const userInitialObject: {
 
 const Page = () => {
   const [user, setUser] = useState(userInitialObject);
+  const [loading, setLoading] = useState(false);
   const handleUser = (e: any) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
@@ -52,6 +53,7 @@ const Page = () => {
   const toast = useToast();
 
   const signUp = async (url: string, obj: object) => {
+    setLoading(true);
     try {
       let res = await Axios.post(url, obj);
       // console.log(res);
@@ -62,8 +64,10 @@ const Page = () => {
         isClosable: true,
         position: "top",
       });
+      setLoading(false);
       router.push("/login");
     } catch (error: any) {
+      setLoading(false);
       toast({
         description: error.response.data.message,
         status: "error",
@@ -312,6 +316,7 @@ const Page = () => {
                 />
               </FormControl>
               <Button
+                isLoading={loading}
                 type="submit"
                 bgGradient="linear(to-l, purple.400, blue.300 ,green.300)"
                 _hover={{

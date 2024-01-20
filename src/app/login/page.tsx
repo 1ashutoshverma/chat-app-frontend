@@ -69,6 +69,7 @@ const Page = () => {
         // dispatch(login());
       } catch (error: any) {
         // console.log(error);
+        setLoading(false);
         toast({
           description: error.response.data.message,
           status: "error",
@@ -95,10 +96,6 @@ const Page = () => {
       router.push("/");
     }
   }, [isAuth, router]);
-
-  // if (loading) {
-  //   return <Loading />;
-  // }
 
   return (
     <Box>
@@ -218,6 +215,7 @@ const Page = () => {
                 Forgot password?{" "}
               </Text>
               <Button
+                isLoading={loading}
                 type="submit"
                 color={"white"}
                 bgGradient="linear(to-l, purple.400, blue.300 ,green.300)"

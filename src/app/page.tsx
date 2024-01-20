@@ -19,7 +19,7 @@ const Home: React.FC = () => {
       description:
         "It can take upto 2 mins in initial start, please be patient!",
       status: "error",
-      duration: 9000,
+      duration: 5000,
       isClosable: true,
       position: "top",
     });
