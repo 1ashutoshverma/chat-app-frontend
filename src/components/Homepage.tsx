@@ -163,13 +163,13 @@ const Homepage = () => {
   return (
     <Flex
       w={"100vw"}
-      h={"100vh"}
+      h={"100dvh"}
       justifyContent={["", "", "center"]}
       alignItems={["", "", "center"]}
     >
-      <Box w={"100vw"} h={"100vh"} position={"fixed"} zIndex={"-1"}>
-        <Box w={"100vw"} h={"30vh"} bg={"blue.400"}></Box>
-        <Box w={"100vw"} h={"70vh"}></Box>
+      <Box w={"100vw"} h={"100dvh"} position={"fixed"} zIndex={"-1"}>
+        <Box w={"100vw"} h={"30dvh"} bg={"blue.400"}></Box>
+        <Box w={"100vw"} h={"70dvh"}></Box>
       </Box>
 
       <Box
@@ -207,9 +207,9 @@ const Homepage = () => {
             bg={"gray.100"}
             borderRadius={"10px"}
             h={[
-              "calc(100vh - 77px)",
-              "calc(100vh - 77px)",
-              "calc(100vh - 150px)",
+              "calc(100dvh - 77px)",
+              "calc(100dvh - 77px)",
+              "calc(100dvh - 150px)",
             ]}
           >
             <Flex
