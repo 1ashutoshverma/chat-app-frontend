@@ -109,7 +109,7 @@ const Navbar: JSXElementConstructor<NavbarInterface> = ({ height }) => {
         <Box>
           <Flex justifyContent="center" alignItems="center" gap="10px">
             <Image
-              src={avatar || "/human.jpg"}
+              src={"/human.jpg"}
               alt=""
               w="50px"
               h="50px"

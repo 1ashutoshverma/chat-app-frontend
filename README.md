@@ -59,3 +59,17 @@ This is a solo project made by <b>Ashutosh Verma</b>
 
 - [Ashutosh Verma (GitHub)](https://github.com/1ashutoshverma)
 - [Ashutosh Verma (LinkedIn)](https://www.linkedin.com/in/1ashutoshverma/)
+
+## How to run
+
+### Local
+```bash
+npm install
+npm run dev
+```
+
+### Docker
+```bash
+docker build -t chat-app-frontend .
+docker run -p 3000:3000 --env-file .env.local chat-app-frontend
+```
