@@ -196,7 +196,7 @@ const LeftTab = () => {
                 h="50px"
                 minW={"50px"}
                 borderRadius="50%"
-                src={e.avatar}
+                src={ "/human.jpg"}
               />
               <Box
                 h={"10px"}

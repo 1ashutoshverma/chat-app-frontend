@@ -228,9 +228,7 @@ const Homepage = () => {
                   h="50px"
                   borderRadius="50%"
                   src={
-                    privateId === ""
-                      ? "https://via.placeholder.com/200x200.png"
-                      : privateId.avatar
+                    "/human.jpg"
                   }
                 />
                 <Box
