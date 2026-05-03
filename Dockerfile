@@ -1,11 +1,17 @@
-# Use Node.js LTS version
-FROM node:20-alpine
+# STAGE 1: Build
+FROM node:20-alpine AS builder
 
-# Set working directory
 WORKDIR /app
+
+# Install build dependencies
+RUN apk add --no-cache python3 make g++
 
 # Copy package files
 COPY package*.json ./
+RUN npm install
+
+# Copy application source
+COPY . .
 
 # Define build arguments for Next.js environment variables
 ARG NEXT_PUBLIC_BASE_URL
@@ -25,20 +31,25 @@ ENV NEXT_PUBLIC_storageBucket=$NEXT_PUBLIC_storageBucket
 ENV NEXT_PUBLIC_messagingSenderId=$NEXT_PUBLIC_messagingSenderId
 ENV NEXT_PUBLIC_appId=$NEXT_PUBLIC_appId
 
-# Install build dependencies (needed for native modules like bcrypt or utf-8-validate)
-RUN apk add --no-cache python3 make g++
-
-# Install dependencies
-RUN npm install
-
-# Copy application source
-COPY . .
-
 # Build the Next.js application
 RUN npm run build
+
+# STAGE 2: Run
+FROM node:20-alpine AS runner
+
+WORKDIR /app
+
+# Set environment to production
+ENV NODE_ENV=production
+
+# Copy necessary files from the builder stage
+# Standard Next.js standalone output copies
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
 
 # Expose the port Next.js runs on
 EXPOSE 3000
 
-# Start the application
-CMD ["npm", "start"]
+# Start the application using the standalone server
+CMD ["node", "server.js"]
